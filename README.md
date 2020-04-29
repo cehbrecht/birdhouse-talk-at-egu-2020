@@ -1,6 +1,12 @@
-# WPS deployment for Copernicus Climate Data Store
+# Birdhouse Talk at EGU 2020
 
-Copernicus CORDEX General Assembly at DMI, Copenhagen, 24-25 September 2019
+EGU Session ESSI1.12:
+* "Innovative Evaluation Frameworks and Platforms for Weather and Climate Research"
+* https://meetingorganizer.copernicus.org/EGU2020/displays/36039
+* Chat Fri, 08 May, 16:15–18:00
+
+
+## installation
 
 This presentation uses [reveal-ck](http://jedcn.github.io/reveal-ck/).
 See [documentation](http://jedcn.github.io/reveal-ck/installation/) for installation.
