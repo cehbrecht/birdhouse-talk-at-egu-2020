@@ -8,9 +8,8 @@ EGU, Vienna, 8 May 2020
 * What is a Web Processing Service?
 * Build your own WPS
 * Using your WPS
-* Deploy your WPS
-* Example: WPS for Climate Indices
-* Example: WPS for Freva
+* Example: Climate Indices as Service
+* Example: Freva as Service
 ---
 ## What is a WPS?
 ```note
@@ -194,6 +193,29 @@ Has a truly pythonic interface
 https://birdy.readthedocs.io/en/latest/notebooks/examples/emu-example.html
 ```
 ---
+## Summary
+* WPS is standard interface for remote processing
+* Use Cookiecutter template to create a new WPS project
+* New WPS is ready to use without extra installation steps
+* Example: climate indices calculation as service.
+* Example: provide Freva plugins as remote service.
+```note
+* Ansible can be used for production deployment
+---
+## Links
+* Website: http://bird-house.github.io/
+* Freva: https://www-miklip.dkrz.de/
+* CP4CDS: https://cp4cds.github.io/
+* Poster: https://github.com/cehbrecht/copernicus-poster-egu-2018/blob/master/copernicus-poster-egu-2018.pdf
+---
+## Thank You
+* Carsten Ehbrecht, DKRZ, Germany
+* Christopher Kadow, DKRZ, Germany
+* Ag Stephens, CEDA, UK
+* David Huard, Ouranos, CA
+---
+## Extra slides
+---
 ## Deploy your WPS
 ---
 ### PyWPS full-stack
@@ -218,27 +240,6 @@ $ ansible-playbook -c local playbook.yml
 ```note
 https://ansible-wps-playbook.readthedocs.io/en/latest/deploy.html
 ```
----
-## Summary
-* WPS is standard interface for remote processing
-* Use Cookiecutter template to create a new WPS project
-* New WPS is ready to use without extra installation steps
-* Ansible can be used for production deployment
-* Example usage: climate indices calculation as service.
----
-## Links
-* Website: http://bird-house.github.io/
-* Freva: https://www-miklip.dkrz.de/
-* CP4CDS: https://cp4cds.github.io/
-* Poster: https://github.com/cehbrecht/copernicus-poster-egu-2018/blob/master/copernicus-poster-egu-2018.pdf
----
-## Thank You
-* Carsten Ehbrecht, DKRZ, Germany
-* Christopher Kadow, DKRZ, Germany
-* Ag Stephens, CEDA, UK
-* David Huard, Ouranos, CA
----
-## Extra slides
 ---
 ### OWSLib - Client
 ![OGC owslib](media/ogc-owslib.png)
