@@ -217,15 +217,16 @@ $ ansible-playbook -c local playbook.yml
 https://ansible-wps-playbook.readthedocs.io/en/latest/deploy.html
 ```
 ---
-## Example: Climate Indicators
-
+## Example
 * [xclim](https://xclim.readthedocs.io/en/latest/): A library of climate indicators using xarray.
-* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for Climate Indicators with xclim.
-* Developed by [Ouranos](https://www.ouranos.ca/en/), Canada, Climate Service Center.
-* Using PyWPS and Birdhouse tools.
+* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for climate indicators with xclim.
+* Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
+```note
+Climate indicators calculation as service.
+```
 ---
 ### xclim: library of climate indicators
-Calculate frost days using xclim python library:
+Calculate frost days using xclim Python library
 ```python
 import xclim
 import xarray as xr
