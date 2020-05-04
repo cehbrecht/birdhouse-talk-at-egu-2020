@@ -8,8 +8,7 @@ EGU, Vienna, 8 May 2020
 * What is a Web Processing Service?
 * Build your own WPS
 * Using your WPS
-* Example: Climate Indices as Service
-* Example: Freva as Service
+* Examples
 ---
 ## What is a WPS?
 ```note
@@ -193,29 +192,6 @@ Has a truly pythonic interface
 https://birdy.readthedocs.io/en/latest/notebooks/examples/emu-example.html
 ```
 ---
-## Summary
-* WPS is standard interface for remote processing
-* Use Cookiecutter template to create a new WPS project
-* New WPS is ready to use without extra installation steps
-* Example: climate indices calculation as service.
-* Example: provide Freva plugins as remote service.
-```note
-* Ansible can be used for production deployment
----
-## Links
-* Website: http://bird-house.github.io/
-* Freva: https://www-miklip.dkrz.de/
-* CP4CDS: https://cp4cds.github.io/
-* Poster: https://github.com/cehbrecht/copernicus-poster-egu-2018/blob/master/copernicus-poster-egu-2018.pdf
----
-## Thank You
-* Carsten Ehbrecht, DKRZ, Germany
-* Christopher Kadow, DKRZ, Germany
-* Ag Stephens, CEDA, UK
-* David Huard, Ouranos, CA
----
-## Extra slides
----
 ## Deploy your WPS
 ---
 ### PyWPS full-stack
@@ -241,35 +217,57 @@ $ ansible-playbook -c local playbook.yml
 https://ansible-wps-playbook.readthedocs.io/en/latest/deploy.html
 ```
 ---
-### OWSLib - Client
-![OGC owslib](media/ogc-owslib.png)
-* Python client-side implementation of WPS, WMS, WCS and more
+## Example: Climate Indicators
+
+* [xclim](https://xclim.readthedocs.io/en/latest/): A library of climate indicators using xarray.
+* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for Climate Indicators with xclim.
+* Developed by [Ouranos](https://www.ouranos.ca/en/), Canada, Climate Service Center.
+* Using PyWPS and Birdhouse tools.
 ---
-### CP4CDS Interfaces
-![cp4cds interfaces](media/cp4cds-interfaces.png)
----
-### Uptime 99%
-![ghc](media/ghc.png)
----
-### Can't do it alone
-<img height="300" src="media/cp4cds-federated.jpg" alt="cp4cds federated"/>
-* Cloud based on Amazon Web Services
-* Failover strategy for resilience
----
-### Security
-<img height="500" src="media/cp4cds-access-control.jpg" alt="security"/>
----
-### Documentation
-Add your WPS documentation to ReadTheDocs
-<img height="250" src="media/Babybird_doc.png" alt="babybird readthedocs"/>
-https://babybird.readthedocs.io/en/latest/index.html
----
-### Tests included
-```bash
-$ make test # quick
-$ make test-all # slow, online
-$ make lint # codestyle checks
+### xclim: library of climate indicators
+Calculate frost days using xclim python library:
+```python
+import xclim
+import xarray as xr
+tasmin = xr.open_dataset('tasmin.nc')
+result = xclim.indices.frost_days(tas=tasmin)
 ```
+[Online Notebook](https://nbviewer.jupyter.org/github/Ouranosinc/xclim/blob/master/docs/notebooks/usage.ipynb)
+---
+### Finch: WPS for xclim
+Call xclim remotely via Finch Web Processing Service:
+```python
+from birdy import WPSClient
+wps = WPSClient('http://demo/finch/wps')
+tasmin = "https://demo/thredds/dodsC/tasmin.nc"
+result = wps.frost_days(tasmin)
+```
+... using Birdy WPS client.
+
+[Online Notebook](https://nbviewer.jupyter.org/github/bird-house/finch/blob/master/docs/source/notebooks/finch-usage.ipynb)
+---
+## Summary
+* WPS is standard interface for remote processing
+* Use Cookiecutter template to create a new WPS project
+* New WPS is ready to use without extra installation steps
+```note
+* Ansible can be used for production deployment
+```
+---
+## Links
+* Website: http://bird-house.github.io/
+* PyWPS: https://pywps.org/
+* Finch: https://finch.readthedocs.io/en/latest/
+* Freva: https://www-miklip.dkrz.de/
+---
+## Thank You
+* Carsten Ehbrecht, DKRZ, Germany
+* Christopher Kadow, DKRZ, Germany
+* Ag Stephens, CEDA, UK
+* David Huard, Ouranos, CA
+---
+## Extra slides
+---
 ### Use the WPS with URL requests
 ```bash
 http://localhost:5000/wps?service=WPS&
@@ -285,6 +283,16 @@ http://localhost:5000/wps?service=WPS&version=1.0.0&
   DataInputs=name=Stranger
 ```
 ---
+### OWSLib - Client
+![OGC owslib](media/ogc-owslib.png)
+* Python client-side implementation of WPS, WMS, WCS and more
+---
+### Tests included
+```bash
+$ make test # quick
+$ make test-all # slow, online
+$ make lint # codestyle checks
+```
 ---
 ### Birdy command line tool
 ```bash
@@ -313,9 +321,6 @@ https://birdy.readthedocs.io/en/latest/api.html#module-birdy.cli
 ```note
 https://birdhouse-workshop.readthedocs.io/en/latest/pywps/process.html#create-your-first-process
 ```
----
-### Sofware Deployment Solution
-<img height="500" src="media/cp4cds-toolbox.jpg" alt="sdds"/>
 ---
 ### Test with Vagrant
 Deploy with Ansible into a test virtual machine set-up by [Vagrant](https://www.vagrantup.com/)
@@ -346,4 +351,7 @@ http://localhost:5000/wps?request=GetCapabilities&service=WPS
 ```note
 https://github.com/bird-house/babybird/blob/master/Dockerfile
 ```
+---
+### Security
+<img height="500" src="media/cp4cds-access-control.jpg" alt="security"/>
 ---
