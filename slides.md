@@ -4,13 +4,7 @@ Building Web Processing Services
 
 EGU, Vienna, 8 May 2020
 ---
-## Table of Contents
-* What is a Web Processing Service?
-* Build your own WPS
-* Using your WPS
-* Examples
----
-## What is a WPS?
+## What is a Web Processing Service?
 ```note
 WPS (Web Processing Service) is a standard developed by the Open Geospatial Consortium (OGC). It provides standard rules to invoke geospatial processing services as a web service. This means that it makes it both easy and flexible to share any geographical data, including climate data.
 
@@ -66,30 +60,52 @@ http://localhost:5000/wps?
 ### Mostly used by user-friendly clients
 ![WPS use case](media/wps_adamsteer.png)
 Like portals, Jupyter notebooks, ...
----
-### PyWPS - Server
-<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
-* Python implementation of WPS
-* Like a bicycle easy to use
-* Open Source and active community
-```note
-To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
 
-There are other implementations available like:
-* 52North WPS (Java): https://52north.org/software/software-projects/wps/
-* Zoo (C++): http://zoo-project.org/
-```
 ---
-### What is the Goal?
-* Make climate data accessible to a wide audience
-* Use a standards based compute service
-* Example: data-reduction as a service next to a large data pool (CORDEX)
+### What does Birdhouse provide?
+* Provides tools to build your own Web Processing Service
+* Supports [PyWPS](https://pywps.org/) - Python implementation of WPS
+* Has a Template to get started
+* Deployment with minimal configuration
+* WPS Client to simplify usage
+
 ```note
 The whole idea behind this specific part of the Copernicus project is to make climate data accessible to not only scientists and engineers, but also to a wide audience. This means that it’s possible to send self-explanatory values based on calculations on the raw data on top of the actual data, which is a big boon for accessibility.
 * Make climate data accessible to a wide audience, not only scientists
 * Use a standards based compute service with a self-describing interface
 * Example: data-reduction and common analysis as a service next to a large data pool (CMIP5/CMIP6, CORDEX)
+* Example: data-reduction as a service next to a large data pool (CORDEX)
 ```
+---
+## Example
+* [xclim](https://xclim.readthedocs.io/en/latest/): A library of climate indicators using xarray.
+* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for climate indicators with xclim.
+* Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
+```note
+Climate indicators calculation as service.
+```
+---
+### xclim: library of climate indicators
+Calculate frost days using xclim Python library
+```python
+import xclim
+import xarray as xr
+tasmin = xr.open_dataset('tasmin.nc')
+result = xclim.indices.frost_days(tas=tasmin)
+```
+[Online Notebook](https://nbviewer.jupyter.org/github/Ouranosinc/xclim/blob/master/docs/notebooks/usage.ipynb)
+---
+### Finch: WPS for xclim
+Call xclim remotely via Finch Web Processing Service:
+```python
+from birdy import WPSClient
+wps = WPSClient('http://demo/finch/wps')
+tasmin = "https://demo/thredds/dodsC/tasmin.nc"
+result = wps.frost_days(tasmin)
+```
+... using Birdy WPS client.
+
+[Online Notebook](https://nbviewer.jupyter.org/github/bird-house/finch/blob/master/docs/source/notebooks/finch-usage.ipynb)
 ---
 ## Build your own WPS
 ```note
@@ -218,36 +234,6 @@ https://ansible-wps-playbook.readthedocs.io/en/latest/deploy.html
 ```
 ---
 ## Example
-* [xclim](https://xclim.readthedocs.io/en/latest/): A library of climate indicators using xarray.
-* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for climate indicators with xclim.
-* Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
-```note
-Climate indicators calculation as service.
-```
----
-### xclim: library of climate indicators
-Calculate frost days using xclim Python library
-```python
-import xclim
-import xarray as xr
-tasmin = xr.open_dataset('tasmin.nc')
-result = xclim.indices.frost_days(tas=tasmin)
-```
-[Online Notebook](https://nbviewer.jupyter.org/github/Ouranosinc/xclim/blob/master/docs/notebooks/usage.ipynb)
----
-### Finch: WPS for xclim
-Call xclim remotely via Finch Web Processing Service:
-```python
-from birdy import WPSClient
-wps = WPSClient('http://demo/finch/wps')
-tasmin = "https://demo/thredds/dodsC/tasmin.nc"
-result = wps.frost_days(tasmin)
-```
-... using Birdy WPS client.
-
-[Online Notebook](https://nbviewer.jupyter.org/github/bird-house/finch/blob/master/docs/source/notebooks/finch-usage.ipynb)
----
-## Example
 * [Freva](https://www-miklip.dkrz.de/): Evaluation System for Climate Data.
 * Evaluation processes can be plugged into the system.
 * Command line and web portal access.
@@ -308,7 +294,7 @@ http://demo/freva/wps?
   DataInputs=input=http://demo/thredds/dodsC/tasmax.nc
 ```
 ---
-### Freva remove Service
+### Freva remote Service
 Remote access to Freva plugins via Web Processing Service
 ```python
 from birdy import WPSClient
@@ -324,7 +310,7 @@ result = wps.movieplotter(tasmax)
 [Online Notebook](https://nbviewer.jupyter.org/github/cehbrecht/frevas/blob/master/notebooks/freva-demo.ipynb)
 ---
 ## Summary
-* WPS is standard interface for remote processing
+* WPS is a standard interface for remote processing
 * Use Cookiecutter template to create a new WPS project
 * New WPS is ready to use without extra installation steps
 ```note
@@ -358,6 +344,19 @@ http://localhost:5000/wps?service=WPS&version=1.0.0&
   request=Execute&
   identifier=hello&
   DataInputs=name=Stranger
+```
+---
+### PyWPS - Server
+<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
+* Python implementation of WPS
+* Lightweight like a bicycle
+* Open Source and active community
+```note
+To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
+
+There are other implementations available like:
+* 52North WPS (Java): https://52north.org/software/software-projects/wps/
+* Zoo (C++): http://zoo-project.org/
 ```
 ---
 ### OWSLib - Client
