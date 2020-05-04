@@ -63,14 +63,13 @@ Like portals, Jupyter notebooks, ...
 
 ---
 ### What does Birdhouse provide?
-* Provides tools to build your own Web Processing Service
-* Supports [PyWPS](https://pywps.org/) - Python implementation of WPS
-* Has a Template to get started
-* Deployment with minimal configuration
-* WPS Client to simplify usage
+* Has a template to build your own Web Processing Service
+* Provides tools for automatic service deployment
+* WPS Client to be used in a Jupyter notebook
 
 ```note
 The whole idea behind this specific part of the Copernicus project is to make climate data accessible to not only scientists and engineers, but also to a wide audience. This means that it’s possible to send self-explanatory values based on calculations on the raw data on top of the actual data, which is a big boon for accessibility.
+* Supports [PyWPS](https://pywps.org/) - Python implementation of WPS
 * Make climate data accessible to a wide audience, not only scientists
 * Use a standards based compute service with a self-describing interface
 * Example: data-reduction and common analysis as a service next to a large data pool (CMIP5/CMIP6, CORDEX)
@@ -110,6 +109,19 @@ result = wps.frost_days(tasmin)
 ## Build your own WPS
 ```note
 A template called "cookiecutter" was created. As the name suggests, it’s a cookie-cutter template that allows you to build your own WPS. This lets you create an implementation of PyWPS.
+```
+---
+### PyWPS - WPS used by Birdhouse
+<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
+* Python implementation of WPS
+* Lightweight like a bicycle
+* Open Source and active community
+```note
+To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
+
+There are other implementations available like:
+* 52North WPS (Java): https://52north.org/software/software-projects/wps/
+* Zoo (C++): http://zoo-project.org/
 ```
 ---
 ### Use a Cookiecutter Template
@@ -344,19 +356,6 @@ http://localhost:5000/wps?service=WPS&version=1.0.0&
   request=Execute&
   identifier=hello&
   DataInputs=name=Stranger
-```
----
-### PyWPS - Server
-<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
-* Python implementation of WPS
-* Lightweight like a bicycle
-* Open Source and active community
-```note
-To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
-
-There are other implementations available like:
-* 52North WPS (Java): https://52north.org/software/software-projects/wps/
-* Zoo (C++): http://zoo-project.org/
 ```
 ---
 ### OWSLib - Client
