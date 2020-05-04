@@ -1,6 +1,6 @@
 ## Birdhouse
 
-Building Web Processing Services
+Build your own Web Processing Service
 
 EGU, Vienna, 8 May 2020
 ---
