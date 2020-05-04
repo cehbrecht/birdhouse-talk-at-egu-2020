@@ -247,6 +247,82 @@ result = wps.frost_days(tasmin)
 
 [Online Notebook](https://nbviewer.jupyter.org/github/bird-house/finch/blob/master/docs/source/notebooks/finch-usage.ipynb)
 ---
+## Example
+* [Freva](https://www-miklip.dkrz.de/): Evaluation System for Climate Data.
+* Evaluation processes can be plugged into the system.
+* Command line and web portal access.
+
+Remote service access could be provided using a Web Processing Service.
+---
+### Freva: GetCapabilities
+Show available plugins
+```bash
+$ freva --plugin
+MoviePlotter: Plots 2D lon/lat movies in GIF format
+MurCSS: Calculates the MSESS ...
+PCA: Principal Component Analysis
+```
+*GetCapabilities* call in a Web Processing Service
+```bash
+http://demo/freva/wps?
+  service=WPS&
+  request=GetCapabilities
+```
+```note
+https://freva.met.fu-berlin.de/guides/bug/
+```
+---
+### Freva: DescribeProcess
+Show details of MoviePlotter plugin
+```bash
+$ freva --plugin MoviePlotter --help
+MoviePlotter (v1.0.0):
+    Plots 2D lon/lat movies in GIF format
+
+Options:
+input     NetCDF file(s) to be plotted.
+```
+*DescribeProcess* call in a Web Processing Service
+```bash
+http://demo/freva/wps?
+  service=WPS&
+  request=DescribeProcess&
+  identifier=movieplotter&
+```
+---
+### Freva: Execute
+Run MoviePlotter
+```bash
+$ freva --plugin movieplotter input=/path/to/tasmax.nc
+Searching Files  
+Remapping Files  
+Calculating ...
+Finished.
+```
+*Execute* call in a Web Processing Service
+```bash
+http://demo/freva/wps?
+  service=WPS&
+  request=Execute&
+  identifier=movieplotter&
+  DataInputs=input=http://demo/thredds/dodsC/tasmax.nc
+```
+---
+### Freva remove Service
+Remote access to Freva plugins via Web Processing Service
+```python
+from birdy import WPSClient
+wps = WPSClient('http://demo/freva/wps')
+# show available plugins
+wps?
+# show movieplotter details
+wps.movieplotter?
+# run movieplotter
+tasmax = "https://demo/thredds/dodsC/tasmax.nc"
+result = wps.movieplotter(tasmax)
+```
+[Online Notebook](https://nbviewer.jupyter.org/github/cehbrecht/frevas/blob/master/notebooks/freva-demo.ipynb)
+---
 ## Summary
 * WPS is standard interface for remote processing
 * Use Cookiecutter template to create a new WPS project
