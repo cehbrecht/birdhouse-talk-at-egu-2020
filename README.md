@@ -6,7 +6,7 @@ EGU Session ESSI1.12:
 * Chat Fri, 08 May, 16:15–18:00
 
 
-## installation
+## Installation
 
 This presentation uses [reveal-ck](http://jedcn.github.io/reveal-ck/).
 See [documentation](http://jedcn.github.io/reveal-ck/installation/) for installation.
