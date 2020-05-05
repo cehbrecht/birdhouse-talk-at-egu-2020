@@ -4,6 +4,8 @@ Build your own Web Processing Service
 
 EGU, Vienna, 8 May 2020
 ---
+## 2 Minute Introduction
+---
 ## What is a Web Processing Service?
 ```note
 WPS (Web Processing Service) is a standard developed by the Open Geospatial Consortium (OGC). It provides standard rules to invoke geospatial processing services as a web service. This means that it makes it both easy and flexible to share any geographical data, including climate data.
@@ -63,9 +65,9 @@ Like portals, Jupyter notebooks, ...
 
 ---
 ### What does Birdhouse provide?
-* Has a template to build your own Web Processing Service
-* Provides tools for automatic service deployment
-* WPS Client to be used in a Jupyter notebook
+* A template to build your own Web Processing Service
+* Tools for automatic deployment
+* WPS Client to be used in Jupyter notebooks
 
 ```note
 The whole idea behind this specific part of the Copernicus project is to make climate data accessible to not only scientists and engineers, but also to a wide audience. This means that it’s possible to send self-explanatory values based on calculations on the raw data on top of the actual data, which is a big boon for accessibility.
@@ -77,15 +79,16 @@ The whole idea behind this specific part of the Copernicus project is to make cl
 ```
 ---
 ## Example
-* [xclim](https://xclim.readthedocs.io/en/latest/): A library of climate indicators using xarray.
-* [finch](https://finch.readthedocs.io/en/latest/): A Web Processing Service for climate indicators with xclim.
-* Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
+
+Climate indicators calculation as a service
+
 ```note
-Climate indicators calculation as service.
+* Climate indicators calculation as service.
+* Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
 ```
 ---
-### xclim: library of climate indicators
-Calculate frost days using xclim Python library
+### Calculate frost days
+Using [xclim](https://xclim.readthedocs.io/en/latest/) Python library
 ```python
 import xclim
 import xarray as xr
@@ -93,18 +96,28 @@ tasmin = xr.open_dataset('tasmin.nc')
 result = xclim.indices.frost_days(tas=tasmin)
 ```
 [Online Notebook](https://nbviewer.jupyter.org/github/Ouranosinc/xclim/blob/master/docs/notebooks/usage.ipynb)
+```note
+* xclim: A library of climate indicators using xarray.
+```
 ---
-### Finch: WPS for xclim
-Call xclim remotely via Finch Web Processing Service:
+### Calculate Frost Days remotely
+Use the Web Processing Service [Finch](https://finch.readthedocs.io/en/latest/)
 ```python
 from birdy import WPSClient
 wps = WPSClient('http://demo/finch/wps')
 tasmin = "https://demo/thredds/dodsC/tasmin.nc"
 result = wps.frost_days(tasmin)
 ```
-... using Birdy WPS client.
+... and the Birdy WPS client.
 
 [Online Notebook](https://nbviewer.jupyter.org/github/bird-house/finch/blob/master/docs/source/notebooks/finch-usage.ipynb)
+```note
+* finch: A Web Processing Service for climate indicators with xclim.
+```
+---
+## Next ...
+* Looking at the Birdhouse tools
+* A Web Processing Service Example for [Freva](https://www-miklip.dkrz.de/)
 ---
 ## Build your own WPS
 ```note
@@ -306,8 +319,8 @@ http://demo/freva/wps?
   DataInputs=input=http://demo/thredds/dodsC/tasmax.nc
 ```
 ---
-### Freva remote Service
-Remote access to Freva plugins via Web Processing Service
+### Freva: Remote Access
+Call Freva plugins via Web Processing Service
 ```python
 from birdy import WPSClient
 wps = WPSClient('http://demo/freva/wps')
@@ -322,9 +335,9 @@ result = wps.movieplotter(tasmax)
 [Online Notebook](https://nbviewer.jupyter.org/github/cehbrecht/frevas/blob/master/notebooks/freva-demo.ipynb)
 ---
 ## Summary
-* WPS is a standard interface for remote processing
-* Use Cookiecutter template to create a new WPS project
-* New WPS is ready to use without extra installation steps
+* *Web Processing Service* is a standard interface for remote processing
+* *"Call a function remotely"*
+* Birdhouse has tools to build your own Web Processing Service
 ```note
 * Ansible can be used for production deployment
 ```
@@ -337,7 +350,7 @@ result = wps.movieplotter(tasmax)
 ---
 ## Thank You
 * Carsten Ehbrecht, DKRZ, Germany
-* Christopher Kadow, DKRZ, Germany
+* Stephan Kindermann, DKRZ, Germany
 * Ag Stephens, CEDA, UK
 * David Huard, Ouranos, CA
 ---
