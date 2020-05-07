@@ -360,10 +360,10 @@ result = wps.movieplotter(tasmax)
 * Freva: https://www-miklip.dkrz.de/
 ---
 ## Thank You
-* Carsten Ehbrecht, DKRZ, Germany
-* Stephan Kindermann, DKRZ, Germany
-* Ag Stephens, CEDA, UK
-* David Huard, Ouranos, CA
+* Carsten Ehbrecht, [DKRZ](https://www.dkrz.de/), Germany
+* Stephan Kindermann, [DKRZ](https://www.dkrz.de/), Germany
+* Ag Stephens, [CEDA/STFC](https://stfc.ukri.org/), UK
+* David Huard, [Ouranos](https://www.ouranos.ca/en/), CA
 ---
 ## Extra slides
 ---
