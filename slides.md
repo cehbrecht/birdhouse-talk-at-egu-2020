@@ -3,6 +3,8 @@
 Build your own Web Processing Service
 
 EGU, Vienna, 8 May 2020
+
+<img height="50" src="media/cc-license.png" alt="Creative Commons License"/>
 ---
 ## 2 Minute Introduction
 ---
@@ -62,7 +64,19 @@ http://localhost:5000/wps?
 ### Mostly used by user-friendly clients
 ![WPS use case](media/wps_adamsteer.png)
 Like portals, Jupyter notebooks, ...
+---
+### PyWPS
+<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
+* [PyWPS](https://pywps.org/): Python implementation of WPS
+* Lightweight like a bicycle
+* Open Source and active community
+```note
+To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
 
+There are other implementations available like:
+* 52North WPS (Java): https://52north.org/software/software-projects/wps/
+* Zoo (C++): http://zoo-project.org/
+```
 ---
 ### What does Birdhouse provide?
 * A template to build your own Web Processing Service
@@ -87,12 +101,16 @@ Climate indicators calculation as a service
 * Developed by [Ouranos Climate Service Center](https://www.ouranos.ca/en/), Canada.
 ```
 ---
-### Calculate frost days
+### Calculate "frost days"
 Using [xclim](https://xclim.readthedocs.io/en/latest/) Python library
 ```python
 import xclim
 import xarray as xr
+
+# load local data with xarray
 tasmin = xr.open_dataset('tasmin.nc')
+
+# calculate frost days
 result = xclim.indices.frost_days(tas=tasmin)
 ```
 [Online Notebook](https://nbviewer.jupyter.org/github/Ouranosinc/xclim/blob/master/docs/notebooks/usage.ipynb)
@@ -100,12 +118,17 @@ result = xclim.indices.frost_days(tas=tasmin)
 * xclim: A library of climate indicators using xarray.
 ```
 ---
-### Calculate Frost Days remotely
+### Calculate "frost days" remotely
 Use the Web Processing Service [Finch](https://finch.readthedocs.io/en/latest/)
 ```python
+# init wps client
 from birdy import WPSClient
 wps = WPSClient('http://demo/finch/wps')
+
+# use web accessible data
 tasmin = "https://demo/thredds/dodsC/tasmin.nc"
+
+# calculate frost days remotely
 result = wps.frost_days(tasmin)
 ```
 ... and the Birdy WPS client.
@@ -115,6 +138,15 @@ result = wps.frost_days(tasmin)
 * finch: A Web Processing Service for climate indicators with xclim.
 ```
 ---
+## Summary
+* *Web Processing Service* is a standard interface for remote processing
+* *"Call a function remotely"*
+* Birdhouse has tools to build your own Web Processing Service
+```note
+* Example: calculate climate indicators (frost days) as service
+* Ansible can be used for production deployment
+```
+---
 ## Next ...
 * Looking at the Birdhouse tools
 * A Web Processing Service Example for [Freva](https://www-miklip.dkrz.de/)
@@ -122,19 +154,6 @@ result = wps.frost_days(tasmin)
 ## Build your own WPS
 ```note
 A template called "cookiecutter" was created. As the name suggests, it’s a cookie-cutter template that allows you to build your own WPS. This lets you create an implementation of PyWPS.
-```
----
-### PyWPS - WPS used by Birdhouse
-<img height="300" src="media/ogc-pywps.png" alt="pywps"/>
-* Python implementation of WPS
-* Lightweight like a bicycle
-* Open Source and active community
-```note
-To the ends of the Copernicus project, we use a PyWPS implementation for the web service. It’s an implementation of the WPS standard written in Python. It enables the use of python programs via the WPS.
-
-There are other implementations available like:
-* 52North WPS (Java): https://52north.org/software/software-projects/wps/
-* Zoo (C++): http://zoo-project.org/
 ```
 ---
 ### Use a Cookiecutter Template
@@ -319,7 +338,7 @@ http://demo/freva/wps?
   DataInputs=input=http://demo/thredds/dodsC/tasmax.nc
 ```
 ---
-### Freva: Remote Access
+### Freva: Web Processing Service
 Call Freva plugins via Web Processing Service
 ```python
 from birdy import WPSClient
@@ -333,14 +352,6 @@ tasmax = "https://demo/thredds/dodsC/tasmax.nc"
 result = wps.movieplotter(tasmax)
 ```
 [Online Notebook](https://nbviewer.jupyter.org/github/cehbrecht/frevas/blob/master/notebooks/freva-demo.ipynb)
----
-## Summary
-* *Web Processing Service* is a standard interface for remote processing
-* *"Call a function remotely"*
-* Birdhouse has tools to build your own Web Processing Service
-```note
-* Ansible can be used for production deployment
-```
 ---
 ## Links
 * Website: http://bird-house.github.io/
